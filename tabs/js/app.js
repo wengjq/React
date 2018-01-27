@@ -7,17 +7,9 @@ class App extends Component {
   constructor(props) {
     super(props);
     
-    this.handleChange = this.handleChange.bind(this);
-
     this.state = {
       activeIndex: 0,
     };
-  }
-
-  handleChange(e) {
-    this.setState({
-      activeIndex: parseInt(e.target.value, 10),
-    });
   }
 
   render() {
