@@ -1,0 +1,88 @@
+$class-prefix: "tabs";
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+h4 {
+  margin: 24px auto;
+  width: 90%;
+  max-width: 1000px;
+}
+
+.#{$class-prefix} {
+  &-bar {
+    margin-bottom: 15px;
+  }
+
+  &-flat {
+    width: 90%;
+    max-width: 1000px;
+    margin: 10px auto;
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+  }
+
+  &-flat &-nav {
+    border-bottom: 1px solid #e2e2e2;
+  }
+
+  &-flat &-nav > &-active {
+    border-bottom: 2px solid blueviolet;
+  }
+
+  &-nav {
+    font-size: 14px;
+
+    &:after,
+    &:before {
+      display: table;
+      content: " ";
+    }
+
+    &:after {
+      clear: both;
+    }
+
+  }
+
+  &-nav > &-tab {
+    float: left;
+    list-style: none;
+    margin-right: 24px;
+    padding: 8px 20px;
+    text-decoration: none;
+    color: blueviolet;
+    opacity: .6;
+    cursor: pointer;
+  }
+
+  &-nav > &-active {
+    opacity: 1;
+    cursor: default;
+  }
+
+  &-content {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-content: center;
+  }
+
+  &-content &-panel {
+    width: 100%;
+    max-width: 100%;
+    padding: 12px 24px;
+    transform: translateX(0px);
+    transition: all .3s ease-in-out;
+  }
+
+}
+
