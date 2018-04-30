@@ -10,16 +10,31 @@ const initialState = {
 
 export function addArticle() {
   return (dispatch, getState) => {
-    const { title, desc, date } = getState().article.dialog.form;
-    return dispatch({
-      url: '/api/article.json',
-      method: 'POST',
-      params: {
+    const { title, desc, date } = getState().articles.modal.form;
+   
+    return dispatch(addArt(
+      {
         title: title.value || '',
         desc: desc.value || '',
         date: date.value || ''
-      }
-    });
+      },
+      getState().articles
+    ));
+  };
+}
+
+export function addArt(article, articles) {
+  const { title, desc, date } = articles.modal.form;
+
+  articles.table.articles.push({
+    id: articles.table.articles.length + 1,
+    title: title.value,
+    desc: desc.value,
+    date: date.value
+  })
+
+  return {
+    type: 'ADD_ARTICLE'
   };
 }
 
@@ -45,6 +60,13 @@ export default function modal(state = initialState, action) {
     }
 
     case 'HIDE_MODAL': {
+      return {
+        ...state,
+        visible: false,
+      };
+    }
+
+    case 'ADD_ARTICLE': {
       return {
         ...state,
         visible: false,

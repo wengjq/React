@@ -7,7 +7,7 @@ const initialState = {
 export function loadArticles() {
   return {
     url: '/api/articles.json',
-    types: ['LOAD_ARTICLES', 'LOAD_ARTICLES_SUCCESS', 'LOAD_ARTICLES_ERROR', 'DELETE_ARTICLES']
+    types: ['LOAD_ARTICLES', 'LOAD_ARTICLES_SUCCESS', 'LOAD_ARTICLES_ERROR'],
   };
 }
 
@@ -29,11 +29,20 @@ export function changeQuery(e) {
   };
 }
 
-export function search() {
+export function search(t) {
   return (dispatch, getState) => {
-    const { query } = getState().articles.table;
-    return dispatch(loadArticles(query));
+    const { articles, query } = getState().articles.table;
+    return dispatch(searchArticles(articles, query));
   }
+}
+
+export function searchArticles(articles, query) {
+  return {
+    type: 'SEARCH',
+    payload: {
+      articles: articles.slice(0).filter(article => article.title.indexOf(query) > -1)
+    }
+  };  
 }
 
 export default function articles(state = initialState, action) {
@@ -44,6 +53,13 @@ export default function articles(state = initialState, action) {
         query: action.payload.query
       };
     }
+
+    case 'SEARCH': {
+      return {
+        ...state,
+        articles: action.payload.articles
+      };
+    }        
 
     case 'DELETE_ARTICLES': {
       return {
@@ -74,13 +90,6 @@ export default function articles(state = initialState, action) {
         ...state,
         loading: false,
         error: true
-      };
-    }
-
-    case 'CHANGE_QUERY': {
-      return {
-        ...state,
-        query: action.payload.query
       };
     }
 
